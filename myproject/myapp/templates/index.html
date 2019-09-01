@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>myapp</title>
+  <title>게시판</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h2>Simplest Crud Example</h2>
-    <p>This shows a list of names and lets you Create, Update and Delete them.</p>
-    {% if names_from_context %}
-        <ul>
-            {% for name in names_from_context %}
-                <li>{{ name.name_value }}  <button>Delete</button> <button>Update</button></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h3>Please go to the admin and add a Name under 'MYAPP'</h3>
-    {% endif %}
-    <h3>Add a Name</h3>
-    <form id="name_form" method="post" action="/">
-        {% csrf_token %}
-        {% for field in form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text }}
-            {{ field }}
-        {% endfor %}
-        <input type="submit" name="submit" value="Create">
-    </form>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td><B>이름</B></td>
+            <td><B>작성자</B></td>
+            <td><B>제목</B></td>
+            <td><B>내용</B></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>  </td>
+            <td>  </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tbody>
+    </table>
 </body>
-</html>

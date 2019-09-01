@@ -1,9 +1,8 @@
 from django import forms
-from myapp.models import Name
+from myapp.models import boardConf
 
-class NameForm(forms.ModelForm):
-    name_value = forms.CharField(max_length=100, help_text = "Enter a name")
-
+class boardForm(forms.ModelForm):
+ 
     class Meta:
-        model = Name
-        fields = ('name_value',)
+        model = boardConf
+        fields = ('title','writer','text')

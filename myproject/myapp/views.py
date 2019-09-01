@@ -1,22 +1,47 @@
-from django.shortcuts import render, redirect
-from myapp.models import Name
-from myapp.forms import NameForm
+from django.shortcuts import render, redirect , get_object_or_404
+from django.http import HttpResponse
+from myapp.models import boardConf
+from myapp.forms import boardForm
+
 
 # Create your views here.
+
 def index(request):
-    names_from_db = Name.objects.all()
+    
+    list_from_db = boardConf.objects.all()
+    context = {'list_from_db' : list_from_db}
+    return render(request, 'index.html', context)
 
-    form = NameForm()
-
-    context_dict = {'names_from_context': names_from_db, 'form': form}
+def add(request):
 
     if request.method == 'POST':
-        form = NameForm(request.POST)
-
+        form = boardForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
-            return render(request, 'index.html', context_dict)
-        else:
-            print(form.errors)    
+            form.save()
+            return redirect('index')
+    
+    else:
+        form = boardForm()
+    return render(request,'add.html', {'form': form})
 
-    return render(request, 'index.html', context_dict)
+def detail(request, pk):
+    err = get_object_or_404(boardConf, pk=pk)
+    return render(request, 'detail.html', {'err':err})
+
+def edit(request, pk):
+    err = get_object_or_404(boardConf, pk=pk)
+    
+    if request.method == 'POST':
+        form = boardForm(request.POST, instance=err)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        else:
+            form = boardForm(instance = err)
+        return render(request,'edit',{'form':form})
+
+def delete(request, pk):
+    list_from_db = boardConf.objects.get(pk=pk)
+    list_from_db.delete()
+    return redirect('index')
+ 
