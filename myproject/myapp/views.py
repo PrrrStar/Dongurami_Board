@@ -10,9 +10,16 @@ from myapp.models import myDB
 class PostsForm(ModelForm):
     class Meta:
         model = myDB
-        fields = ['id', 'title', 'author']
+        fields = ['id', 'title', 'writer']
 
-def post_list(request, template_name='myapp/post_list.html'):
+
+def post_list(request, template_name='myapp/index2.html'):
+    posts = myDB.objects.all()
+    data = {}
+    data['object_list'] = posts
+    return render(request, template_name, data)
+
+def post_detail(request, template_name='myapp/post_detail.html'):
     posts = myDB.objects.all()
     data = {}
     data['object_list'] = posts

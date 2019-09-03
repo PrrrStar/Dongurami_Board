@@ -7,7 +7,9 @@ from django.db import models
 class myDB(models.Model):
     title = models.CharField(max_length=400)
     tag = models.CharField(max_length=50)
-    author = models.CharField(max_length=120)
+    writer = models.CharField(max_length=120)
+    contents = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.title
