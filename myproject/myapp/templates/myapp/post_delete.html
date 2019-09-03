@@ -8,8 +8,8 @@
   <body>
     <div class="container">
       <form method="post">{% csrf_token %}
-        Are you sure you want to delete "{{ object }}" ?
-        <input class="btn btn-primary" type="submit" value="Submit" />
+        정말 삭제하시겠습니까? "{{ title }}" ?
+        <input class="btn btn-primary" type="submit" value="삭제" />
       </form>
     </div>
   </body>

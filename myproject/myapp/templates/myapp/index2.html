@@ -10,14 +10,17 @@
 </head>
 <body>
 <div class="container">
+    <h2><B>Prography 5th Django CRUD Board</B></h2>
+    <hr>
     <table class="table">
         <thead>
-        <tr>
-            <td><B>번호</B></td>
-            <td><B>제목</B></td>
-            <td><B>작성자</B></td>
-            <td><B>날짜</B></td>
-            <td><B>조회수</B></td>
+        <tr style="align-items: center">
+            <td style="width:5%"><B>번호</B></td>
+            <td style="width:50%"><B>제목</B></td>
+            <td style="width:10%"><B>작성자</B></td>
+            <td style="width:20%"><B>날짜</B></td>
+            <td style="width:10%"><B>조회수</B></td>
+            <td></td>
         </tr>
         </thead>
         <tbody>
@@ -30,8 +33,9 @@
             </td>
 
             <td>{{post.writer}}</td>
-            <!-- <td>{{post.date}}</td>
-            <td>{{post.hits}}</td>  -->
+            <td>{{post.date}}</td>
+            <td>{{post.hits}}</td>
+            <td><a href="{% url "post_delete" post.id %}">삭제</a></td>
         </tr>
             {% endfor %}
             {%else %}
@@ -40,6 +44,6 @@
             {% endif %}
         <tbody>
     </table>
-    <a href="{% url "post_new" %}">New Blog post entry</a>
+    <a href="{% url "post_new" %}">게시글 추가</a>
 </body>
 </html>
