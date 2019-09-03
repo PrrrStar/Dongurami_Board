@@ -1,6 +1,6 @@
 from django.contrib import admin
-from myapp.models import boardConf
+from myapp.models import myapp
 
 # Register your models here.
 
-admin.site.register(boardConf)
+admin.site.register(myapp)

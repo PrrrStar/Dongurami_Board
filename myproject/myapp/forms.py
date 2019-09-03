@@ -1,8 +1,8 @@
 from django import forms
-from myapp.models import boardConf
+from myapp.models import myapp
 
 class boardForm(forms.ModelForm):
  
     class Meta:
-        model = boardConf
+        model = myapp
         fields = ('title','writer','text')

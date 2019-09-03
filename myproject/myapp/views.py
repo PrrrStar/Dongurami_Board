@@ -1,47 +1,41 @@
-from django.shortcuts import render, redirect , get_object_or_404
-from django.http import HttpResponse
-from myapp.models import boardConf
-from myapp.forms import boardForm
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.forms import ModelForm
 
+from myapp.models import myapp
 # Create your views here.
 
-def index(request):
-    
-    list_from_db = boardConf.objects.all()
-    context = {'list_from_db' : list_from_db}
-    return render(request, 'index.html', context)
+class PostsForm(ModelForm):
+    class Meta:
+        model = myapp
+        fields = ['id', 'title', 'author']
 
-def add(request):
+def post_list(request, template_name='myapp/post_list.html'):
+    posts = myapp.objects.all()
+    data = {}
+    data['object_list'] = posts
+    return render(request, template_name, data)
 
-    if request.method == 'POST':
-        form = boardForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    
-    else:
-        form = boardForm()
-    return render(request,'add.html', {'form': form})
+def post_add(request, template_name='myapp/post_form.html'):
+    form = PostsForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('myapp:post_list')
+    return render(request, template_name, {'form': form})
 
-def detail(request, pk):
-    err = get_object_or_404(boardConf, pk=pk)
-    return render(request, 'detail.html', {'err':err})
+def post_edit(request, pk, template_name='myapp/post_form.html'):
+    post = get_object_or_404(blog_posts, pk=pk)
+    form = PostsForm(request.POST or None, instance=post)
+    if form.is_valid():
+        form.save()
+        return redirect('myapp:post_list')
+    return render(request, template_name, {'form': form})
 
-def edit(request, pk):
-    err = get_object_or_404(boardConf, pk=pk)
-    
-    if request.method == 'POST':
-        form = boardForm(request.POST, instance=err)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-        else:
-            form = boardForm(instance = err)
-        return render(request,'edit',{'form':form})
-
-def delete(request, pk):
-    list_from_db = boardConf.objects.get(pk=pk)
-    list_from_db.delete()
-    return redirect('index')
- 
+def post_delete(request, pk, template_name='myapp/post_delete.html'):
+    post = get_object_or_404(myapp, pk=pk)
+    if request.method=='POST':
+        post.delete()
+        return redirect('myapp:post_list')
+    return render(request, template_name, {'object': post})
