@@ -10,14 +10,13 @@
         <h1>Blog Post List!</h1>
         <ul>
           {% for post in object_list %}
-          <li><p>Post ID: <a href="{% url "myapp:post_edit" post.id %}">{{ post.id }}</a></p>
+          <li><p>Post ID: <a href="{% url "post_edit" post.id %}">{{ post.id }}</a></p>
           <p>Title: {{ post.title }}</p>
-            <a href="{% url "myapp:post_delete" post.id %}">Delete</a>
+            <a href="{% url "post_delete" post.id %}">Delete</a>
           </li>
           {% endfor %}
         </ul>
-
-        <a href="{% url "myapp:post_new" %}">New Blog post entry</a>
+        <a href="{% url "post_new" %}">New Blog post entry</a>
    
 </div> 
   </body>

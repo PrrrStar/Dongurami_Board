@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
-class myapp(models.Model):
+class myDB(models.Model):
     title = models.CharField(max_length=400)
     tag = models.CharField(max_length=50)
     author = models.CharField(max_length=120)
