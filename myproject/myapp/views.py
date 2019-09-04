@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
 from myapp.models import myDB
+
 # Create your views here.
 
 class PostsForm(ModelForm):
@@ -21,7 +22,6 @@ def post_list(request, template_name='myapp/post_list.html'):
 
 def post_detail(request, pk, template_name='myapp/post_detail.html'):
     post = myDB.objects.get(pk = pk)
-
     return render(request, template_name, {'post':post})
 
 def post_add(request, template_name='myapp/post_add.html'):
@@ -39,9 +39,8 @@ def post_edit(request, pk, template_name='myapp/post_add.html'):
         return redirect('post_list')
     return render(request, template_name, {'form': form})
 
-def post_delete(request, pk, template_name='myapp/post_delete.html'):
+
+def post_delete(request, pk):
     post = get_object_or_404(myDB, pk=pk)
-    if request.method=='POST':
-        post.delete()
-        return redirect('post_list')
-    return render(request, template_name, {'object': post})
+    post.delete()
+    return redirect('post_list')

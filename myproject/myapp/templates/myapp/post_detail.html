@@ -1,39 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>게시판</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title>게시판</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+<script>
+    function deleteFunc() {
+        if (confirm('ㄹㅇ 삭제?') == true) {
+            window.location.href = "{% url 'post_delete' post.id %}";
+            alert('삭제성공')
+
+        } else {
+            return;
+        }
+    }
+
+    function editFunc() {
+        if (confirm('ㄹㅇ 수정?') == true) {
+            window.location.href = "{% url 'post_edit' post.id %}";
+        } else {
+            return;
+        }
+    }
+</script>
 
 <body>
-<div class="container">
-    <input type="hidden" name="hit_value" value="{{post.hit_value}}"></input>
-    <hr>
-    <table class="table">
-        <thead>
-        <tr style="align-items: center">
-            <td><B>{{post.title}}</B></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class ='tbody_tr' id='tbody_tr_{{post.id}}'>
-      
-            <td>{{post.writer}}</td>
-            <td>{{post.date}}</td>
-            <td>{{post.hits}}</td>
-        </tr>
-        <tr>
-            <td>{{post.contents}}</td>
-        </tr>
-        </tbody>
-        
-    
-    </table>
-    <a href="{% url "post_edit" post.id %}">수정</a>
-    <a href="{% url "post_delete" post.id %}">삭제</a>
+    <div class="container">
+        <h2><B>Prography 5th Django CRUD Board</B></h2>
+        <input type="hidden" name="hit_value" value="{{post.hit_value}}"></input>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>
+                        <h3>{{post.title}}</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:80%">{{post.writer}}</td>
+                    <td style="width:20%">{{post.date}}</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{post.contents|linebreaks}}</td>
+                </tr>
+            </tbody>
+
+
+        </table>
+
+        <p style="text-align:right; font-size:130%">
+            <a id='post_edit' onclick="editFunc()">수정</a> &nbsp;
+            <a id='post_delete' onclick="deleteFunc()">삭제</a> &nbsp;
+            <a href="{% url "post_list" %}">목록</a>
+        </p>
 </body>
+
 </html>
