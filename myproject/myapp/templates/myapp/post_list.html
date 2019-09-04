@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-    <title>Django CRUD application!</title>
-  </head>
-  <body>
-    <div class="container">
-        <h1>Blog Post List!</h1>
-        <ul>
-          {% for post in object_list %}
-          <li><p>Post ID: <a href="{% url "post_edit" post.id %}">{{ post.id }}</a></p>
-          <p>Title: {{ post.title }}</p>
-            <a href="{% url "post_delete" post.id %}">Delete</a>
-          </li>
-          {% endfor %}
-        </ul>
-        <a href="{% url "post_new" %}">New Blog post entry</a>
-   
-</div> 
-  </body>
+<html lang="en">
+<head>
+  <title>게시판</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .tbody_tr:hover{
+        background-color:rgb(210, 236, 245);
+    }
+</style>
+
+<body>
+<div class="container">
+    <h2><B>Prography 5th Django CRUD Board</B></h2>
+    <hr>
+    <table class="table">
+        <thead>
+        <tr style="align-items: center">
+            <td style="width:5%"><B>번호</B></td>
+            <td style="width:50%"><B>제목</B></td>
+            <td style="width:10%"><B>작성자</B></td>
+            <td style="width:20%"><B>작성일</B></td>
+            <td style="width:10%"><B>조회수</B></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+            {% if object_list %}
+            {% for post in object_list %}
+        <tr class ='tbody_tr' id='tbody_tr_{{post.id}}'>
+            <td>{{post.id}}</td>
+            <td>
+                <a href="{% url "post_detail" post.id %}">{{post.title}}</a>
+            </td>
+
+            <td>{{post.writer}}</td>
+            <td>{{post.date}}</td>
+            <td>{{post.hits}}</td>
+        </tr>
+            {% endfor %}
+            {%else %}
+
+            <p>No posts </p>
+            {% endif %}
+        <tbody>
+    </table>
+    <a href="{% url "post_new" %}">게시글 추가</a>
+</body>
 </html>

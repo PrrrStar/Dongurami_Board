@@ -1,21 +1,38 @@
-<html>
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>게시판</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
 
-        <meta charsert="UTF-8">
-        <title>
-
-        </title>
-
+<body>
+<div class="container">
+    <hr>
+    <table class="table">
+        <thead>
+        <tr style="align-items: center">
+            <td><B>{{post.title}}</B></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class ='tbody_tr' id='tbody_tr_{{post.id}}'>
+      
+            <td>{{post.writer}}</td>
+            <td>{{post.date}}</td>
+            <td>{{post.hits}}</td>
+        </tr>
+        <tr>
+            <td>{{post.contents}}</td>
+        </tr>
+        </tbody>
         
-    </head>
-
-    <body>
-        <form action = "" method="post">
-            {% csrf_token %}
-            {{form.as_p}}
-
-            <input type = "submit" value="ADD">
-        </form>
-
-    </body>
+    
+    </table>
+    <a href="{% url "post_edit" post.id %}">수정</a>
+    <a href="{% url "post_delete" post.id %}">삭제</a>
+</body>
 </html>

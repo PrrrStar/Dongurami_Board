@@ -10,9 +10,13 @@ class myDB(models.Model):
     writer = models.CharField(max_length=120, null=True, default='')
     contents = models.TextField(null=True, default='')
     date = models.DateTimeField(auto_now_add=True)
+    hits = models.PositiveIntegerField(default=0)
 
     def __unicode__(self):
         return self.title
 
-    def get_post_url(self):
-        return reverse('post_edit', kwargs={'pk': self.pk})
+
+    @property
+    def hit_value(self):
+        self.hits = self.hits +1
+        self.save()
