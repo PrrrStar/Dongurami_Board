@@ -34,38 +34,105 @@
     }
 </script>
 
-<body>
-    <div class="container">
-        <h2><B>Prography 5th Django CRUD Board</B></h2>
-        <input type="hidden" name="hit_value" value="{{post.hit_value}}"></input>
-        <hr>
-        <table class="table">
-            <thead>
-                <tr>
-                    <td>
-                        <h3>{{post.title}}</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:80%">{{post.writer}}</td>
-                    <td style="width:20%">{{post.date}}</td>
-                </tr>
-            </thead>
+<style>
+    body {
+        background-color: #efefef;
+        padding: 60px;
+    }
 
-            <tbody>
-                <tr>
-                    <td>{{post.contents|linebreaks}}</td>
-                </tr>
-            </tbody>
+    .comment_table {
+        width: 100%;
+        vertical-align: middle;
+        background-color: #e8e8e8;
+
+    }
+
+    .comment_table td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 5px;
+    }
+
+    .c_writer {
+        font-weight: bold;
+        font-size: 110%;
+    }
+
+    .c_date {
+        width: 100%;
+        border-bottom: 1px solid #dfdfdf;
+        font-size: 80%;
+        color: #bcbcbc;
+    }
+
+    .c_contents {
+        width: 400px;
+    }
+</style>
+
+<form method="post">
+
+    <body>
+        <div class="container">
+            <h2><B>Prography 5th Django CRUD Board</B></h2>
+            <input type="hidden" name="hit_value" value="{{post.hit_value}}"></input>
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td style="width:70%;font-weight: bold;font-size: 200%;">{{post.title}}</td>
+                    </tr>
+                    <tr>
+                        <td style="width:70%;font-weight: bold;font-size: 120%;">{{post.writer}}</td>
+                        <td style="width:30%">{{post.date}}</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td style="font-size:130%">{{post.contents|linebreaks}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <hr>
+            <p style="text-align:right; font-size:130%">
+                <a id='post_edit' onclick="editFunc()">수정</a> &nbsp;
+                <a id='post_delete' onclick="deleteFunc()">삭제</a> &nbsp;
+                <a href="{% url "post_list" %}">목록</a>
+            </p>
+
+            <br>
+
+            <b style="font-size:130%; font-weight:bold">댓글</b>
+            <div class="comment_table">
+                <table>
+                    {%for comment in post.comments.all %}
+                    <tr class='c_date'>
+                        <td>{{comment.c_date}}</td>
+                    </tr>
+                    <tr class='c_writer'>
+                        <td>{{comment.c_writer}}</td>
+                    </tr>
+                    <tr class='c_comment'>
+                        <td>{{comment.c_contents|linebreaks}}</td>
+                    </tr>
+                    {%endfor%}
+                </table>
+
+                <br>
+                <table class="comment_post">
+                    {% csrf_token %}
+                    <tr class='c_contents'>
+                        <td>{{form.c_contents|linebreaksbr}}</td>
+                        <td><button id="comment_btn" type="submit">작성</button></td>
+                    </tr>
+                </table>
+            </div>
 
 
-        </table>
-
-        <p style="text-align:right; font-size:130%">
-            <a id='post_edit' onclick="editFunc()">수정</a> &nbsp;
-            <a id='post_delete' onclick="deleteFunc()">삭제</a> &nbsp;
-            <a href="{% url "post_list" %}">목록</a>
-        </p>
-</body>
+        </div>
+    </body>
+</form>
 
 </html>
