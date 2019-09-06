@@ -15,7 +15,6 @@ class myDB(models.Model):
     def __unicode__(self):
         return self.title
 
-
     @property
     def hit_value(self):
         self.hits = self.hits +1

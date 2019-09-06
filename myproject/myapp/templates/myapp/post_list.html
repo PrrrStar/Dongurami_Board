@@ -8,19 +8,20 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 <style>
     .tbody_tr:hover {
         background-color: rgb(210, 236, 245);
     }
-    #tbody_tr_title:hover{
-        color:lightskyblue;
+
+    #tbody_tr_title:hover {
+        color: lightskyblue;
         cursor: pointer;
 
 
     }
 </style>
-
 
 <body>
     <div class="container">
@@ -37,20 +38,26 @@
                     <td></td>
                 </tr>
             </thead>
+            <!-- <td id='tbody_tr_title{{post.id}}' onclick="detailFunc('{{post.id}}')">{{post.title}}
+            </td>
+            <script>
+                function detailFunc(id) {
+                    print(id)
+                    window.location.href = "{% url 'post_detail' post.id %}";
+                }
+            </script> -->
 
             <tbody>
                 {% if object_list %}
                 {% for post in object_list %}
                 <tr class='tbody_tr' id='tbody_tr_{{post.id}}'>
                     <td>{{post.id}}</td>
-                    <td id ='tbody_tr_title' onclick='detailFunc()'>{{post.title}}</td>
 
-                    <script>
-                        function detailFunc() {
-                            window.location.href = "{% url 'post_detail' post.id %}";
-                        }
-                    </script>
+                    <td>
 
+                    <a href = "{% url 'post_detail' post.id %}">{{post.writer}}</a>
+
+                    </td>
                     <td>{{post.writer}}</td>
                     <td>{{post.date}}</td>
                     <td>{{post.hits}}</td>
