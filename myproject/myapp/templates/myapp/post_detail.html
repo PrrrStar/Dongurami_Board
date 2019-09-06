@@ -9,22 +9,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+<input type="hidden" name="pwd" value="{{post.pwd}}"></input>
 <script>
     function deleteFunc() {
-        if (confirm('ㄹㅇ 삭제?') == true) {
+        var pwd = prompt("비밀번호 입력", '');
+
+        if (pwd == '{{post.pwd}}') {
             window.location.href = "{% url 'post_delete' post.id %}";
-            alert('삭제성공')
+            alert('삭제성공');
 
         } else {
-            return;
+            alert('돌아가');
         }
     }
 
     function editFunc() {
-        if (confirm('ㄹㅇ 수정?') == true) {
+        var pwd = prompt("비밀번호 입력", '');
+
+        if (pwd == '{{post.pwd}}') {
             window.location.href = "{% url 'post_edit' post.id %}";
         } else {
-            return;
+            alert('돌아가');
         }
     }
 </script>

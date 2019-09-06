@@ -11,7 +11,7 @@ from myapp.models import myDB
 class PostsForm(ModelForm):
     class Meta:
         model = myDB
-        fields = ['id', 'title', 'writer','contents']
+        fields = ['id', 'title', 'writer','contents','pwd']
 
 
 def post_list(request, template_name='myapp/post_list.html'):
