@@ -25,14 +25,14 @@
 
 <body>
     <div class="container">
-        <h2><B>Prography 5th Django CRUD Board</B> -Jeemin Kim</h2>
+        <h2><B>동그라미 게시판</B></h2>
         <hr>
         <table class="table">
             <thead>
                 <tr style="align-items: center">
-                    <td style="width:5%"><B>번호</B></td>
-                    <td style="width:50%"><B>제목</B></td>
-                    <td style="width:10%"><B>작성자</B></td>
+                    <td style="width:10%"><B>번호</B></td>
+                    <td style="width:45%"><B>제목</B></td>
+                    <td style="width:15%"><B>작성자</B></td>
                     <td style="width:20%"><B>작성일</B></td>
                     <td style="width:10%"><B>조회수</B></td>
                     <td></td>
@@ -46,11 +46,8 @@
                 <tr class='tbody_tr' id='tbody_tr_{{post.id}}'>
                     <td>{{post.id}}</td>
 
-                    <td>
-
-                    <a href = "{% url 'post_detail' post.id %}">{{post.title}}</a>
-
-                    </td>
+                    <td id ='tbody_tr_title' 
+                    onClick = "location.href='{% url 'post_detail' post.id %}'">{{post.title}}</td>
                     <td>{{post.writer}}</td>
                     <td>{{post.date}}</td>
                     <td>{{post.hits}}</td>
@@ -63,7 +60,7 @@
 
         </table>
         <tbody>
-            <p style="text-align: right;font-size:130%;"><a href="{% url "post_new" %}">게시글 추가</a>
+            <p style="text-align: right;font-size:130%;"><a href="{% url "post_add" %}">게시글 추가</a>
                 &emsp;&emsp;&emsp;
             </p>
 </body>

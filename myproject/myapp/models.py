@@ -22,8 +22,8 @@ class Board_DB(models.Model):
         self.save()
 
 class Comment_DB(models.Model):
-    c_post = models.ForeignKey('Board_DB',related_name='comments', on_delete=models.CASCADE)
-    c_writer = models.CharField(max_length=10, default='익명')
+    c_post = models.ForeignKey(Board_DB,related_name='comments', on_delete=models.CASCADE, null=True)
+    c_writer = models.CharField(max_length=10, default='익명의 동글')
     c_contents = models.TextField(null=False, default='')
     c_date = models.DateTimeField(auto_now_add=True)
     c_like = models.IntegerField(default=0)
