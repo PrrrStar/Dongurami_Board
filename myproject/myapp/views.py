@@ -14,7 +14,7 @@ class PostsForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment_DB
-        fields = ['c_contents']
+        fields = ['id','c_contents']
         widgets={
             'c_contents':Textarea(attrs={'cols':60,'rows':2}),
             
@@ -38,11 +38,16 @@ def post_detail(request, pk):
             comment.c_post = post
             comment.save()
             return redirect('post_detail', pk= pk)
-
     return render(request, 'myapp/post_detail.html', {'post':post, 'form':form})
-def comment_rm(request, pk, cpk):
-    post = get_object_or_404(Board_DB, pk=pk)
-    comment = Comment_DB.objects.get(pk=cpk)
+
+def comment_like(request, pk):
+    comment = get_object_or_404(Comment_DB, c_pk=c_pk)
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        comment.c_like +=1
+        comment.save()
+        return redirect('post_detail', pk=pk)
+    return render(request, 'myapp/post_detail.html', {'comment':comment, 'form':form})
 
 def post_add(request, template_name='myapp/post_add.html'):
     form = PostsForm(request.POST or None)
@@ -58,6 +63,21 @@ def post_delete(request, pk):
     post.delete()
     return redirect('post_list')
 
+def comment_delete(request, pk, c_pk):
+    comment = get_object_or_404(Comment_DB , c_pk = c_pk)
+    comment.delete()
+    return redirect('post_detail', pk=pk)
+
+
+def comment_dislike(request, pk):
+    post = get_object_or_404(Board_DB, pk=pk)
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        comment.c_like -=1
+        comment.save()
+        return redirect('post_detail', pk= pk)
+    return render(request, 'myapp/post_detail.html', {'post':post, 'form':form})
+
 def post_edit(request, pk):
     post = get_object_or_404(Board_DB, pk=pk)
     form = PostsForm(request.POST or None, instance=post)
@@ -65,4 +85,3 @@ def post_edit(request, pk):
         form.save()
         return redirect('post_detail', pk=pk)
     return render(request, 'myapp/post_edit.html', {'form': form})
-

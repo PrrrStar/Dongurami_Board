@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
 
 # Create your models here.
@@ -22,6 +21,7 @@ class Board_DB(models.Model):
         self.save()
 
 class Comment_DB(models.Model):
+    #c_number = models.ForeignKey(Comment_DB, related_name='c_pk', on_delete=modles.CASCADE, null=True)
     c_post = models.ForeignKey(Board_DB,related_name='comments', on_delete=models.CASCADE, null=True)
     c_writer = models.CharField(max_length=10, default='익명의 동글')
     c_contents = models.TextField(null=False, default='')
@@ -29,5 +29,7 @@ class Comment_DB(models.Model):
     c_like = models.IntegerField(default=0)
     c_dislike = models.IntegerField(default=0)
 
+    class Meta:
+        ordering = ['-id']
     def __str__(self):
         return self.c_contents

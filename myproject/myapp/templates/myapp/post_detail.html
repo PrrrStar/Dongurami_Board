@@ -32,6 +32,19 @@
             alert('돌아가');
         }
     }
+    function likeFunc(like){
+        var c_like = document.getElementByClassName('comment_like').text;
+        var c_dislike = document.getElementByClassName('comment_dislike').text;
+        
+        var l, dl;
+        if (like ==1){
+            alert(c_like);
+            l = parseInt().c_like + 1;
+        }else {
+            alert(c_dislike);
+            dl = parseInt().c_dislike +1; 
+        }
+    }
 </script>
 
 <style>
@@ -43,11 +56,11 @@
     .comment_table {
         width: 100%;
         border: 1px solid #dfdfdf;
-        
+
     }
 
-    .comment_table td{
-        padding-left:5px;
+    .comment_table td {
+        padding-left: 5px;
     }
 
     .comment_div {
@@ -71,8 +84,16 @@
         font-size: 115%;
         width: 400px;
     }
-    .comment_like{
-        color:red;
+
+    .comment_like {
+        color: red;
+        cursor:pointer;
+    }
+
+    .comment_dislike {
+        color: blue;
+        cursor:pointer;
+   
     }
 </style>
 
@@ -109,26 +130,29 @@
 
         <br>
 
-        <b style="font-size:130%; font-weight:bold">댓글</b>
-        <div class='comment_div'>
-            {%for comment in post.comments.all %}
-            <table class="comment_table">
-                <tr class='c_writer'>
-                    <td>{{comment.c_writer}}</td>
-                </tr>
-                <tr class='c_comment'>
-                    <td>{{comment.c_contents|linebreaks}}</td>
-                </tr>
-                <tr class='c_date'>
-                    <td>{{comment.c_date }}<a class='comment_like'>  👍 {{comment.c_like}}</a></td> 
-                </tr>
-            </table>
-            <br>
-            {%endfor%}
+        <form method="POST">
+            <b style="font-size:130%; font-weight:bold">댓글</b>
+            <div class='comment_div'>
+                {%for comment in post.comments.all %}
+                <table class="comment_table">
+                    <tr class='c_writer'>
+                        <td>{{comment.c_writer}}</td>
+                    </tr>
+                    <tr class='c_comment'>
+                        <td>{{comment.c_contents|linebreaks}}</td>
+                    </tr>
+                    <tr class='c_date'>
+                        <td>{{comment.c_date }}
+                            <a class="comment_like" onclick="likeFunc('1')">👍 {{comment.c_like}}</a>_
+                            <a class="comment_dislike" onclick="likeFunc('-1')">👎 {{comment.c_dislike}}</a>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                {%endfor%}
 
-            <br>
+                <br>
 
-            <form method="POST">
                 <table class="comment_post">
                     <tr class='c_contents'>
                         {% csrf_token %}
@@ -136,8 +160,8 @@
                         <td><input type='submit' id="comment_btn" value="작성" /></td>
                     </tr>
                 </table>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </body>
 
